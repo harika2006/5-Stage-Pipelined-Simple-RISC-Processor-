@@ -1,4 +1,4 @@
-module test_mips32_lw_sw;
+module test_mips32;
 
   reg clk1, clk2;
   integer k;
@@ -15,34 +15,36 @@ module test_mips32_lw_sw;
   end
 
   initial begin
+    // Initialize registers
     for (k = 0; k < 32; k = k + 1)
       mips.Reg[k] = 0;
 
-    // Load program into memory
-    mips.Mem[0] = 32'h28010078;  // ADDI R1, R0, 120
-    mips.Mem[1] = 32'h0c631800;  // OR   R3, R3, R3 (dummy)
-    mips.Mem[2] = 32'h20220000;  // LW   R2, 0(R1)
-    mips.Mem[3] = 32'h0c631800;  // OR   R3, R3, R3 (dummy)
-    mips.Mem[4] = 32'h2842002d;  // ADDI R2, R2, 45
-    mips.Mem[5] = 32'h0c631800;  // OR   R3, R3, R3 (dummy)
-    mips.Mem[6] = 32'h24220001;  // SW   R2, 1(R1)
-    mips.Mem[7] = 32'hfc000000;  // HLT
-
-    mips.Mem[120] = 85;  // Initial value at memory[120]
+    // Load instructions into memory
+    mips.Mem[0] = 32'h2801000a;  // ADDI R1, R0, 10
+    mips.Mem[1] = 32'h28020014;  // ADDI R2, R0, 20
+    mips.Mem[2] = 32'h28030019;  // ADDI R3, R0, 25
+    mips.Mem[3] = 32'h0ce77800;  // OR   R7, R7, R7 -- dummy
+    mips.Mem[4] = 32'h0ce77800;  // OR   R7, R7, R7 -- dummy
+    mips.Mem[5] = 32'h00222000;  // ADD  R4, R1, R2
+    mips.Mem[6] = 32'h0ce77800;  // OR   R7, R7, R7 -- dummy
+    mips.Mem[7] = 32'h00832800;  // ADD  R5, R4, R3
+    mips.Mem[8] = 32'hfc000000;  // HLT
 
     mips.PC = 0;
     mips.HALTED = 0;
     mips.TAKEN_BRANCH = 0;
 
-    #500;
-    $display("Mem[120] = %d", mips.Mem[120]);
-    $display("Mem[121] = %d", mips.Mem[121]);
+    #300;
+
+    // Display values in registers after execution
+    for (k = 0; k <= 5; k = k + 1)
+      $display("R%0d = %d", k, mips.Reg[k]);
   end
 
   initial begin
-    $dumpfile("mips_lw_sw.vcd");
-    $dumpvars(0, test_mips32_lw_sw);
-    #600 $finish;
+    $dumpfile("mips.vcd");
+    $dumpvars(0, test_mips32);
+    #500 $finish;
   end
 
 endmodule
