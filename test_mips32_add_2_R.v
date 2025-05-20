@@ -1,4 +1,4 @@
-//Add	three	numbers	10,	20	and	30	stored	in	processor	registers.
+//Add three numbers 10, 20 and 30 stored in processor registers.
 module test_mips32;
 
   reg clk1, clk2;
