@@ -1,4 +1,4 @@
-//Compute	the	factorial	of	a	number	N	stored	in	memory	location	200.	The	result	will	be	stored	in	memory	location	198.	
+//Compute the factorial of a number N stored in	memory location 200. The result	will be stored in	memory location	198.	
 module test_mips32_factorial;
 
   reg clk1, clk2;
