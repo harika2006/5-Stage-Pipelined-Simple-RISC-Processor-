@@ -1,4 +1,4 @@
-//Load	a	word	stored	in	memory	location	120,	add	45	to	it,	and	store	the	result in	memory	location	121.	
+//Load a word stored in memory location 120, add 45 to it, and store the result in memory location 121.	
 in	memory	loca on	121.	
 module test_mips32_lw_sw;
 
